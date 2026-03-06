@@ -2212,6 +2212,8 @@ var TerraformPluginSDKExternalNameConfigs = map[string]config.ExternalName{
 	"aws_s3_bucket": config.ParameterAsIdentifier("bucket"),
 	// the S3 bucket accelerate configuration resource should be imported using the bucket
 	"aws_s3_bucket_accelerate_configuration": config.IdentifierFromProvider,
+	// the S3 bucket ABAC configuration resource should be imported using the bucket
+	"aws_s3_bucket_abac": config.IdentifierFromProvider,
 	// the S3 bucket ACL resource should be imported using the bucket
 	"aws_s3_bucket_acl": config.IdentifierFromProvider,
 	// S3 bucket analytics configurations can be imported using bucket:analytics
