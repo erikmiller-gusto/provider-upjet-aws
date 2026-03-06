@@ -9,6 +9,10 @@ import (
 
 	"github.com/crossplane/upjet/v2/pkg/controller"
 
+	accessgrant "github.com/upbound/provider-aws/v2/internal/controller/cluster/s3control/accessgrant"
+	accessgrantsinstance "github.com/upbound/provider-aws/v2/internal/controller/cluster/s3control/accessgrantsinstance"
+	accessgrantsinstanceresourcepolicy "github.com/upbound/provider-aws/v2/internal/controller/cluster/s3control/accessgrantsinstanceresourcepolicy"
+	accessgrantslocation "github.com/upbound/provider-aws/v2/internal/controller/cluster/s3control/accessgrantslocation"
 	accesspoint "github.com/upbound/provider-aws/v2/internal/controller/cluster/s3control/accesspoint"
 	accesspointpolicy "github.com/upbound/provider-aws/v2/internal/controller/cluster/s3control/accesspointpolicy"
 	accountpublicaccessblock "github.com/upbound/provider-aws/v2/internal/controller/cluster/s3control/accountpublicaccessblock"
@@ -23,6 +27,10 @@ import (
 // the supplied manager.
 func Setup_s3control(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		accessgrant.Setup,
+		accessgrantsinstance.Setup,
+		accessgrantsinstanceresourcepolicy.Setup,
+		accessgrantslocation.Setup,
 		accesspoint.Setup,
 		accesspointpolicy.Setup,
 		accountpublicaccessblock.Setup,
@@ -43,6 +51,10 @@ func Setup_s3control(mgr ctrl.Manager, o controller.Options) error {
 // the supplied manager gated.
 func SetupGated_s3control(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		accessgrant.SetupGated,
+		accessgrantsinstance.SetupGated,
+		accessgrantsinstanceresourcepolicy.SetupGated,
+		accessgrantslocation.SetupGated,
 		accesspoint.SetupGated,
 		accesspointpolicy.SetupGated,
 		accountpublicaccessblock.SetupGated,

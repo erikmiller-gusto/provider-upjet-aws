@@ -7,6 +7,18 @@
 package v1beta1
 
 // Hub marks this type as a conversion hub.
+func (tr *AccessGrant) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *AccessGrantsInstance) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *AccessGrantsInstanceResourcePolicy) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *AccessGrantsLocation) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *AccessPointPolicy) Hub() {}
 
 // Hub marks this type as a conversion hub.

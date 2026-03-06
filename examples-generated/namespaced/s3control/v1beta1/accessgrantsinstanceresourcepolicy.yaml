@@ -1,0 +1,50 @@
+# SPDX-FileCopyrightText: 2025 The Crossplane Authors <https://crossplane.io>
+#
+# SPDX-License-Identifier: CC0-1.0
+
+
+apiVersion: s3control.aws.m.upbound.io/v1beta1
+kind: AccessGrantsInstanceResourcePolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: s3control/v1beta1/accessgrantsinstanceresourcepolicy
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    policy: |
+      {
+        "Version": "2012-10-17",
+        "Id": "S3AccessGrantsPolicy",
+        "Statement": [{
+          "Sid": "AllowAccessToS3AccessGrants",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "123456789456"
+          },
+          "Action": [
+            "s3:ListAccessGrants",
+            "s3:ListAccessGrantsLocations",
+            "s3:GetDataAccess"
+          ],
+          "Resource": "${aws_s3control_access_grants_instance.example.access_grants_instance_arn}"
+        }]
+      }
+    region: us-west-1
+
+---
+
+apiVersion: s3control.aws.m.upbound.io/v1beta1
+kind: AccessGrantsInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: s3control/v1beta1/accessgrantsinstanceresourcepolicy
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    region: us-west-1

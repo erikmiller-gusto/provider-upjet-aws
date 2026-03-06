@@ -784,6 +784,7 @@ import (
 	appmonitor "github.com/upbound/provider-aws/v2/internal/controller/namespaced/rum/appmonitor"
 	metricsdestination "github.com/upbound/provider-aws/v2/internal/controller/namespaced/rum/metricsdestination"
 	buckets3 "github.com/upbound/provider-aws/v2/internal/controller/namespaced/s3/bucket"
+	bucketabac "github.com/upbound/provider-aws/v2/internal/controller/namespaced/s3/bucketabac"
 	bucketaccelerateconfiguration "github.com/upbound/provider-aws/v2/internal/controller/namespaced/s3/bucketaccelerateconfiguration"
 	bucketacl "github.com/upbound/provider-aws/v2/internal/controller/namespaced/s3/bucketacl"
 	bucketanalyticsconfiguration "github.com/upbound/provider-aws/v2/internal/controller/namespaced/s3/bucketanalyticsconfiguration"
@@ -807,6 +808,10 @@ import (
 	directorybucket "github.com/upbound/provider-aws/v2/internal/controller/namespaced/s3/directorybucket"
 	object "github.com/upbound/provider-aws/v2/internal/controller/namespaced/s3/object"
 	objectcopy "github.com/upbound/provider-aws/v2/internal/controller/namespaced/s3/objectcopy"
+	accessgrant "github.com/upbound/provider-aws/v2/internal/controller/namespaced/s3control/accessgrant"
+	accessgrantsinstance "github.com/upbound/provider-aws/v2/internal/controller/namespaced/s3control/accessgrantsinstance"
+	accessgrantsinstanceresourcepolicy "github.com/upbound/provider-aws/v2/internal/controller/namespaced/s3control/accessgrantsinstanceresourcepolicy"
+	accessgrantslocation "github.com/upbound/provider-aws/v2/internal/controller/namespaced/s3control/accessgrantslocation"
 	accesspoints3control "github.com/upbound/provider-aws/v2/internal/controller/namespaced/s3control/accesspoint"
 	accesspointpolicy "github.com/upbound/provider-aws/v2/internal/controller/namespaced/s3control/accesspointpolicy"
 	accountpublicaccessblock "github.com/upbound/provider-aws/v2/internal/controller/namespaced/s3control/accountpublicaccessblock"
@@ -1771,6 +1776,7 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		appmonitor.Setup,
 		metricsdestination.Setup,
 		buckets3.Setup,
+		bucketabac.Setup,
 		bucketaccelerateconfiguration.Setup,
 		bucketacl.Setup,
 		bucketanalyticsconfiguration.Setup,
@@ -1794,6 +1800,10 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		directorybucket.Setup,
 		object.Setup,
 		objectcopy.Setup,
+		accessgrant.Setup,
+		accessgrantsinstance.Setup,
+		accessgrantsinstanceresourcepolicy.Setup,
+		accessgrantslocation.Setup,
 		accesspoints3control.Setup,
 		accesspointpolicy.Setup,
 		accountpublicaccessblock.Setup,
@@ -2764,6 +2774,7 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		appmonitor.SetupGated,
 		metricsdestination.SetupGated,
 		buckets3.SetupGated,
+		bucketabac.SetupGated,
 		bucketaccelerateconfiguration.SetupGated,
 		bucketacl.SetupGated,
 		bucketanalyticsconfiguration.SetupGated,
@@ -2787,6 +2798,10 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		directorybucket.SetupGated,
 		object.SetupGated,
 		objectcopy.SetupGated,
+		accessgrant.SetupGated,
+		accessgrantsinstance.SetupGated,
+		accessgrantsinstanceresourcepolicy.SetupGated,
+		accessgrantslocation.SetupGated,
 		accesspoints3control.SetupGated,
 		accesspointpolicy.SetupGated,
 		accountpublicaccessblock.SetupGated,

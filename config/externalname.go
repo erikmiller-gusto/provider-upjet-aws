@@ -11,6 +11,7 @@ import (
 
 	"github.com/crossplane/crossplane-runtime/v2/pkg/errors"
 	"github.com/crossplane/upjet/v2/pkg/config"
+	"github.com/hashicorp/terraform-plugin-go/tfprotov6"
 
 	"github.com/upbound/provider-aws/v2/config/cluster/common"
 )
@@ -136,9 +137,22 @@ var TerraformPluginFrameworkExternalNameConfigs = map[string]config.ExternalName
 	// s3
 	//
 	// S3 directory bucket can be imported using the full id: [bucket_name]--[azid]--x-s3
-	"aws_s3_directory_bucket": config.ParameterAsIdentifier("bucket"),
+	"aws_s3_directory_bucket": s3DirectoryBucket(),
+	// the S3 bucket ABAC configuration resource should be imported using the bucket
+	"aws_s3_bucket_abac": config.IdentifierFromProvider,
 	// The S3 bucket lifecycle configuration resource should be imported using the bucket
 	"aws_s3_bucket_lifecycle_configuration": s3LifecycleConfiguration(),
+
+	// s3control
+	//
+	// S3 Access Grant can be imported using the account_id and access_grant_id, separated by a comma
+	"aws_s3control_access_grant": config.IdentifierFromProvider,
+	// S3 Access Grants Instance can be imported using the account_id
+	"aws_s3control_access_grants_instance": config.IdentifierFromProvider,
+	// S3 Access Grants Instance Resource Policy can be imported using the account_id
+	"aws_s3control_access_grants_instance_resource_policy": config.IdentifierFromProvider,
+	// S3 Access Grants Location can be imported using the account_id and access_grants_location_id, separated by a comma
+	"aws_s3control_access_grants_location": config.IdentifierFromProvider,
 
 	// vpclattice
 	//
@@ -3362,6 +3376,28 @@ func rdsInstanceState() config.ExternalName {
 	return e
 }
 
+// missingResourceIdentityIsNotFound is an IsNotFoundDiagnosticFn for
+// terraform-plugin-framework resources that define a resource identity schema.
+// When a resource is not found during Read, the provider's identity interceptor
+// skips setting identity (because the state is null), but the framework still
+// checks that identity is non-null, producing a "Missing Resource Identity
+// After Read" error. We treat this diagnostic as "resource not found" so upjet
+// can handle it correctly.
+func missingResourceIdentityIsNotFound(diags []*tfprotov6.Diagnostic) bool {
+	for _, d := range diags {
+		if d.Summary == "Missing Resource Identity After Read" {
+			return true
+		}
+	}
+	return false
+}
+
+func s3DirectoryBucket() config.ExternalName {
+	e := config.ParameterAsIdentifier("bucket")
+	e.IsNotFoundDiagnosticFn = missingResourceIdentityIsNotFound
+	return e
+}
+
 func s3LifecycleConfiguration() config.ExternalName {
 	e := config.IdentifierFromProvider
 	e.GetExternalNameFn = func(tfstate map[string]any) (string, error) {
@@ -3375,6 +3411,14 @@ func s3LifecycleConfiguration() config.ExternalName {
 		}
 		return idStr, nil
 	}
+	// The underlying terraform-provider-aws defines a resource identity schema
+	// for this resource. When the resource is not found during Read, the
+	// provider's identity interceptor skips setting identity (because the state
+	// is null), but the terraform-plugin-framework still checks that identity
+	// is non-null, producing a "Missing Resource Identity After Read" error.
+	// We treat this diagnostic as "resource not found" so upjet can handle it
+	// correctly by reporting the resource as not existing.
+	e.IsNotFoundDiagnosticFn = missingResourceIdentityIsNotFound
 	return e
 }
 
