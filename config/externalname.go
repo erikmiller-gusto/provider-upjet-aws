@@ -49,6 +49,23 @@ var TerraformPluginFrameworkExternalNameConfigs = map[string]config.ExternalName
 	// Bedrock Agent can be imported using the agent arn
 	"aws_bedrockagent_agent": identifierFromProviderWithDefaultStub("STUB123456"),
 
+	// bedrockagentcore
+	//
+	//
+	"aws_bedrockagentcore_agent_runtime":               config.FrameworkResourceWithComputedIdentifier("agent_runtime_id", "xp_stub_hosted_agent_i3sdp-PCtbZ62Yy2"),
+	"aws_bedrockagentcore_agent_runtime_endpoint":      bedrockAgentCoreAgentRuntimeEndpoint(),
+	"aws_bedrockagentcore_api_key_credential_provider": frameworkNameAsIdentifier(),
+	"aws_bedrockagentcore_browser":                     config.FrameworkResourceWithComputedIdentifier("browser_id", "stub_browser_xp_szn45-n7uhLDeK0u"),
+	"aws_bedrockagentcore_code_interpreter":            config.FrameworkResourceWithComputedIdentifier("code_interpreter_id", "stub_code_interpreter_tool_xp_123abc-QJBfJmqq7c"),
+	"aws_bedrockagentcore_gateway":                     config.FrameworkResourceWithComputedIdentifier("gateway_id", "gateway-stub-crossplane-x00x0x-xx0x0xx0xx"),
+	"aws_bedrockagentcore_gateway_target":              config.FrameworkResourceWithComputedIdentifier("target_id", "XXXXXXXX11"),
+	// import using ID of memory, must satisfy regex [a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}
+	"aws_bedrockagentcore_memory":                     identifierFromProviderWithDefaultStub("stub_memory_placeholder_xp-stub123456"),
+	"aws_bedrockagentcore_memory_strategy":            config.FrameworkResourceWithComputedIdentifier("memory_strategy_id", "STUB123456"),
+	"aws_bedrockagentcore_oauth2_credential_provider": frameworkNameAsIdentifier(),
+	"aws_bedrockagentcore_token_vault_cmk":            bedrockAgentCoreTokenVaultCMK(),
+	"aws_bedrockagentcore_workload_identity":          frameworkNameAsIdentifier(),
+
 	// CodeGuru Profiler
 	// Profiling Group can be imported using the the profiling group name
 	"aws_codeguruprofiler_profiling_group": config.NameAsIdentifier,
@@ -57,6 +74,11 @@ var TerraformPluginFrameworkExternalNameConfigs = map[string]config.ExternalName
 	//
 	// us-west-2_abc123/3ho4ek12345678909nh3fmhpko
 	"aws_cognito_user_pool_client": cognitoUserPoolClient(),
+
+	// cloudfront
+	//
+	// Cloudfront VPC Origin can be imported using the ID
+	"aws_cloudfront_vpc_origin": identifierFromProviderWithDefaultStub("vo_stub000000000000000000"),
 
 	// dsql
 	//
@@ -122,6 +144,15 @@ var TerraformPluginFrameworkExternalNameConfigs = map[string]config.ExternalName
 	// OSIS Pipeline can be imported using the name
 	"aws_osis_pipeline": config.ParameterAsIdentifier("pipeline_name"),
 
+	// route53profiles
+	//
+	// route53profiles_association can be imported using the id
+	"aws_route53profiles_association": identifierFromProviderWithDefaultStub("rpassoc-stub123456"),
+	// route53profiles_profile can be imported using the id
+	"aws_route53profiles_profile": identifierFromProviderWithDefaultStub("rp-stub123456"),
+	// route53profiles_resource_association can be imported using the id
+	"aws_route53profiles_resource_association": identifierFromProviderWithDefaultStub("rpr-001s0000tu00000001b"),
+
 	// amp
 	//
 	// Prometheus Scraper can be imported using the ARN: arn:aws:aps:us-west-2:123456789012:scraper/s-12345678-1234-1234-1234-123456789012
@@ -162,6 +193,11 @@ var TerraformPluginFrameworkExternalNameConfigs = map[string]config.ExternalName
 	"aws_vpclattice_resource_gateway": identifierFromProviderWithDefaultStub("rgw-055b56956a39439ba"),
 	// VPC Lattice Service Network Resource Association can be imported using the id
 	"aws_vpclattice_service_network_resource_association": identifierFromProviderWithDefaultStub("snra-1234567890abcef12"),
+
+	// wafv2
+	//
+	// WAFv2 Web ACL Rule Group Association can be imported using the web_acl_arn,rule_name,custom|managed,identifier
+	"aws_wafv2_web_acl_rule_group_association": wafv2WebACLRuleGroupAssociation(),
 
 	// ********** When adding new services please keep them alphabetized by their aws go sdk package name **********
 }
@@ -250,17 +286,17 @@ var TerraformPluginSDKExternalNameConfigs = map[string]config.ExternalName{
 	// API Gateway domain names can be imported using their name
 	"aws_api_gateway_domain_name": config.IdentifierFromProvider,
 	// aws_api_gateway_gateway_response can be imported using REST-API-ID/RESPONSE-TYPE
-	"aws_api_gateway_gateway_response": FormattedIdentifierFromProvider("/", "rest_api_id", "response_type"),
+	"aws_api_gateway_gateway_response": apiGatewayFormattedIdentifier("aggr", "rest_api_id", "response_type"),
 	// aws_api_gateway_integration can be imported using REST-API-ID/RESOURCE-ID/HTTP-METHOD
-	"aws_api_gateway_integration": FormattedIdentifierFromProvider("/", "rest_api_id", "resource_id", "http_method"),
+	"aws_api_gateway_integration": apiGatewayFormattedIdentifier("agi", "rest_api_id", "resource_id", "http_method"),
 	// aws_api_gateway_integration_response can be imported using REST-API-ID/RESOURCE-ID/HTTP-METHOD/STATUS-CODE
-	"aws_api_gateway_integration_response": FormattedIdentifierFromProvider("/", "rest_api_id", "resource_id", "http_method", "status_code"),
+	"aws_api_gateway_integration_response": apiGatewayFormattedIdentifier("agir", "rest_api_id", "resource_id", "http_method", "status_code"),
 	// aws_api_gateway_method can be imported using REST-API-ID/RESOURCE-ID/HTTP-METHOD
-	"aws_api_gateway_method": FormattedIdentifierFromProvider("/", "rest_api_id", "resource_id", "http_method"),
+	"aws_api_gateway_method": apiGatewayFormattedIdentifier("agm", "rest_api_id", "resource_id", "http_method"),
 	// aws_api_gateway_method_response can be imported using REST-API-ID/RESOURCE-ID/HTTP-METHOD/STATUS-CODE
-	"aws_api_gateway_method_response": FormattedIdentifierFromProvider("/", "rest_api_id", "resource_id", "http_method", "status_code"),
+	"aws_api_gateway_method_response": apiGatewayFormattedIdentifier("agmr", "rest_api_id", "resource_id", "http_method", "status_code"),
 	// aws_api_gateway_method_settings can be imported using REST-API-ID/STAGE-NAME/METHOD-PATH
-	"aws_api_gateway_method_settings": FormattedIdentifierFromProvider("/", "rest_api_id", "stage_name", "method_path"),
+	"aws_api_gateway_method_settings": apiGatewayFormattedIdentifier("", "rest_api_id", "stage_name", "method_path"),
 	// aws_api_gateway_model can be imported using REST-API-ID/NAME
 	"aws_api_gateway_model": config.IdentifierFromProvider,
 	// aws_api_gateway_request_validator can be imported using REST-API-ID/REQUEST-VALIDATOR-ID
@@ -272,7 +308,7 @@ var TerraformPluginSDKExternalNameConfigs = map[string]config.ExternalName{
 	// aws_api_gateway_rest_api_policy can be imported by using the REST API ID
 	"aws_api_gateway_rest_api_policy": FormattedIdentifierFromProvider("", "rest_api_id"),
 	// aws_api_gateway_stage can be imported using REST-API-ID/STAGE-NAME
-	"aws_api_gateway_stage": FormattedIdentifierFromProvider("/", "rest_api_id", "stage_name"),
+	"aws_api_gateway_stage": apiGatewayFormattedIdentifier("ags", "rest_api_id", "stage_name"),
 	// AWS API Gateway Usage Plan can be imported using the id
 	"aws_api_gateway_usage_plan": config.IdentifierFromProvider,
 	// AWS API Gateway Usage Plan Key can be imported using the USAGE-PLAN-ID/USAGE-PLAN-KEY-ID
@@ -648,6 +684,17 @@ var TerraformPluginSDKExternalNameConfigs = map[string]config.ExternalName{
 	"aws_codecommit_repository": config.ParameterAsIdentifier("repository_name"),
 	// No import
 	"aws_codecommit_trigger": config.IdentifierFromProvider,
+
+	// codebuild
+	//
+	// CodeBuild Projects can be imported using the name
+	"aws_codebuild_project": config.TemplatedStringAsIdentifier("name", fullARNTemplate("codebuild", "project/{{ .external_name }}")),
+	// CodeBuild Report Groups can be imported using the name
+	"aws_codebuild_report_group": config.TemplatedStringAsIdentifier("name", fullARNTemplate("codebuild", "report-group/{{ .external_name }}")),
+	// CodeBuild Source Credentials can be imported using the arn
+	"aws_codebuild_source_credential": config.IdentifierFromProvider,
+	// CodeBuild Webhooks can be imported using the project name
+	"aws_codebuild_webhook": codebuildWebhook(),
 
 	// codepipeline
 	//
@@ -1173,6 +1220,8 @@ var TerraformPluginSDKExternalNameConfigs = map[string]config.ExternalName{
 	// Imported using the parameter called repository but this is not the name
 	// of the resource, only a configuration/reference.
 	"aws_ecr_repository_policy": config.IdentifierFromProvider,
+	// Imported using the prefix.
+	"aws_ecr_repository_creation_template": ecrRepositoryCreationTemplate(),
 
 	// ecrpublic
 	//
@@ -1321,6 +1370,11 @@ var TerraformPluginSDKExternalNameConfigs = map[string]config.ExternalName{
 	//
 	// EMR Severless applications can be imported using the id
 	"aws_emrserverless_application": config.IdentifierFromProvider,
+
+	// emrcontainers
+	//
+	// EMR Containers Virtual Clusters can be imported using the id
+	"aws_emrcontainers_virtual_cluster": config.IdentifierFromProvider,
 
 	// evidently
 	//
@@ -2212,6 +2266,10 @@ var TerraformPluginSDKExternalNameConfigs = map[string]config.ExternalName{
 	"aws_route53_resolver_rule": config.IdentifierFromProvider,
 	// rslvr-rrassoc-97242eaf88example
 	"aws_route53_resolver_rule_association": config.IdentifierFromProvider,
+	// rqlc-92edc3b1838248bf
+	"aws_route53_resolver_query_log_config": config.IdentifierFromProvider,
+	// rqlca-b320624fef3c4d70
+	"aws_route53_resolver_query_log_config_association": config.IdentifierFromProvider,
 
 	// rum
 	//
@@ -3332,6 +3390,51 @@ func apiGatewayAccount() config.ExternalName {
 	return e
 }
 
+// apiGatewayFormattedIdentifier configures external name for API Gateway
+// v1 resources where the Terraform internal ID format differs from the import
+// format. GetExternalNameFn reads tfstate fields directly (e.g.,
+// tfstate["rest_api_id"]) and joins them with "/" separators. GetIDFn reads
+// parameters and joins them with "-" separators, optionally adding a prefix.
+// This ensures consistent values to prevent external name oscillation.
+func apiGatewayFormattedIdentifier(prefix string, keys ...string) config.ExternalName {
+	e := config.IdentifierFromProvider
+	e.GetExternalNameFn = func(tfstate map[string]interface{}) (string, error) {
+		vals := make([]string, len(keys))
+		for i, key := range keys {
+			val, ok := tfstate[key]
+			if !ok {
+				return "", errors.Errorf("parameter %q cannot be empty", key)
+			}
+			s, ok := val.(string)
+			if !ok {
+				return "", errors.Errorf("parameter %q must be a string", key)
+			}
+			vals[i] = s
+		}
+		return strings.Join(vals, "/"), nil
+	}
+	e.GetIDFn = func(_ context.Context, _ string, parameters map[string]interface{}, _ map[string]interface{}) (string, error) {
+		vals := make([]string, len(keys))
+		for i, key := range keys {
+			val, ok := parameters[key]
+			if !ok {
+				return "", errors.Errorf("parameter %q cannot be empty", key)
+			}
+			s, ok := val.(string)
+			if !ok {
+				return "", errors.Errorf("parameter %q must be a string", key)
+			}
+			vals[i] = s
+		}
+		id := strings.Join(vals, "-")
+		if prefix != "" {
+			return prefix + "-" + id, nil
+		}
+		return id, nil
+	}
+	return e
+}
+
 // fullARNTemplate builds a templated string for constructing a terraform id component which is an ARN, which includes
 // the aws partition, service, region, account id, and resource. This is by far the most common form of ARN.
 // e.g. arn:aws:ec2:ap-south-1:123456789012:instance/i-1234567890ab
@@ -3434,6 +3537,184 @@ func dsqlClusterPeering() config.ExternalName {
 			return "", errors.New("identifier field must be a string")
 		}
 		return idStr, nil
+	}
+	return e
+}
+
+// customRuleGroupIdentifier returns the ARN from a rule_group_reference block,
+// or an empty string if none is found.
+func customRuleGroupIdentifier(tfstate map[string]any) string {
+	rgr, ok := tfstate["rule_group_reference"].(map[string]interface{})
+	if !ok || rgr == nil {
+		return ""
+	}
+	arn, _ := rgr["arn"].(string)
+	return arn
+}
+
+// managedRuleGroupIdentifier returns the "vendorName:name[:version]" identifier
+// from a managed_rule_group block, or an empty string if none is found.
+func managedRuleGroupIdentifier(tfstate map[string]any) string {
+	mrg, ok := tfstate["managed_rule_group"].(map[string]interface{})
+	if !ok || mrg == nil {
+		return ""
+	}
+	vendorName, _ := mrg["vendor_name"].(string)
+	name, _ := mrg["name"].(string)
+	if vendorName == "" || name == "" {
+		return ""
+	}
+	identifier := vendorName + ":" + name
+	if version, _ := mrg["version"].(string); version != "" {
+		identifier += ":" + version
+	}
+	return identifier
+}
+
+// wafv2WebACLRuleGroupAssociation
+// The import format is a 4-part composite key:
+// web_acl_arn,rule_name,custom|managed,identifier
+// For custom rule groups, identifier is the rule group ARN.
+// For managed rule groups, identifier is vendorName:name[:version].
+func wafv2WebACLRuleGroupAssociation() config.ExternalName {
+	e := config.IdentifierFromProvider
+	e.GetExternalNameFn = func(tfstate map[string]any) (string, error) {
+		webACLArn, ok := tfstate["web_acl_arn"].(string)
+		if !ok {
+			return "", errors.New("web_acl_arn attribute missing from state file")
+		}
+		ruleName, ok := tfstate["rule_name"].(string)
+		if !ok {
+			return "", errors.New("rule_name attribute missing from state file")
+		}
+
+		if arn := customRuleGroupIdentifier(tfstate); arn != "" {
+			return strings.Join([]string{webACLArn, ruleName, "custom", arn}, ","), nil
+		}
+		if id := managedRuleGroupIdentifier(tfstate); id != "" {
+			return strings.Join([]string{webACLArn, ruleName, "managed", id}, ","), nil
+		}
+
+		return "", errors.New("either rule_group_reference or managed_rule_group must be present in state file")
+	}
+	return e
+}
+
+func bedrockAgentCoreTokenVaultCMK() config.ExternalName {
+	e := config.IdentifierFromProvider
+	e.GetExternalNameFn = func(tfstate map[string]any) (string, error) {
+		if id, ok := tfstate["token_vault_id"]; ok {
+			idStr := fmt.Sprintf("%v", id)
+			if len(idStr) > 0 {
+				return idStr, nil
+			}
+		}
+		return "", errors.Errorf("cannot find attribute %q in tfstate", "token_vault_id")
+	}
+	e.SetIdentifierArgumentFn = func(base map[string]any, externalName string) {
+		if externalName == "" {
+			return
+		}
+		if tvid, ok := base["token_vault_id"].(string); !ok || tvid == "" {
+			base["token_vault_id"] = externalName
+		}
+	}
+	e.IdentifierFields = []string{"token_vault_id"}
+	return e
+}
+
+func frameworkNameAsIdentifier() config.ExternalName {
+	e := config.NameAsIdentifier
+	e.OmittedFields = []string{}
+	e.GetIDFn = func(_ context.Context, _ string, _ map[string]any, _ map[string]any) (string, error) {
+		return "", nil
+	}
+	e.GetExternalNameFn = func(tfstate map[string]any) (string, error) {
+		name, ok := tfstate["name"].(string)
+		if !ok {
+			return "", errors.New("name field missing from tfstate")
+		}
+		return name, nil
+	}
+	return e
+}
+
+func bedrockAgentCoreAgentRuntimeEndpoint() config.ExternalName {
+	e := config.IdentifierFromProvider
+	e.SetIdentifierArgumentFn = func(tfstate map[string]any, externalName string) {
+		if externalName == "" {
+			return
+		}
+		extNameParts := strings.Split(externalName, ":")
+		if len(extNameParts) != 2 {
+			return
+		}
+
+		_, ok := tfstate["agent_runtime_id"].(string)
+		if !ok {
+			tfstate["agent_runtime_id"] = extNameParts[0]
+		}
+
+		_, ok = tfstate["name"].(string)
+		if !ok {
+			tfstate["name"] = extNameParts[1]
+		}
+
+	}
+	e.GetIDFn = func(_ context.Context, _ string, _ map[string]any, _ map[string]any) (string, error) {
+		return "", nil
+	}
+	e.GetExternalNameFn = func(tfstate map[string]any) (string, error) {
+		name, ok := tfstate["name"].(string)
+		if !ok {
+			return "", errors.New("name field missing from tfstate")
+		}
+		agentRuntimeId, ok := tfstate["agent_runtime_id"].(string)
+		if !ok {
+			return "", errors.New("agent_runtime_id field missing from tfstate")
+		}
+		return fmt.Sprintf("%s:%s", agentRuntimeId, name), nil
+	}
+	e.IdentifierFields = []string{"name", "agent_runtime_id"}
+	return e
+}
+
+func codebuildWebhook() config.ExternalName {
+	e := config.IdentifierFromProvider
+	e.SetIdentifierArgumentFn = func(tfstate map[string]any, externalName string) {
+		if externalName == "" {
+			return
+		}
+		tfstate["project_name"] = externalName
+	}
+	return e
+}
+
+func ecrRepositoryCreationTemplate() config.ExternalName {
+	e := config.IdentifierFromProvider
+	e.IdentifierFields = []string{"prefix"}
+	e.SetIdentifierArgumentFn = func(base map[string]any, externalName string) {
+		if externalName == "" {
+			return
+		}
+		base["prefix"] = externalName
+	}
+	e.GetIDFn = func(_ context.Context, externalName string, parameters map[string]any, _ map[string]any) (string, error) {
+		if externalName != "" {
+			return externalName, nil
+		}
+		prefix, ok := parameters["prefix"].(string)
+		if !ok {
+			return "", errors.New("field \"prefix\" field missing from parameters")
+		}
+		return prefix, nil
+	}
+	e.GetExternalNameFn = func(tfstate map[string]any) (string, error) {
+		prefix, ok := tfstate["prefix"].(string)
+		if !ok {
+			return "", errors.New("attribute \"prefix\" missing from TF state")
+		}
+		return prefix, nil
 	}
 	return e
 }

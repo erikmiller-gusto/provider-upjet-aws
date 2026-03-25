@@ -132,6 +132,18 @@ import (
 	schedulingpolicy "github.com/upbound/provider-aws/v2/internal/controller/namespaced/batch/schedulingpolicy"
 	inferenceprofile "github.com/upbound/provider-aws/v2/internal/controller/namespaced/bedrock/inferenceprofile"
 	agent "github.com/upbound/provider-aws/v2/internal/controller/namespaced/bedrockagent/agent"
+	agentruntime "github.com/upbound/provider-aws/v2/internal/controller/namespaced/bedrockagentcore/agentruntime"
+	agentruntimeendpoint "github.com/upbound/provider-aws/v2/internal/controller/namespaced/bedrockagentcore/agentruntimeendpoint"
+	apikeycredentialprovider "github.com/upbound/provider-aws/v2/internal/controller/namespaced/bedrockagentcore/apikeycredentialprovider"
+	browser "github.com/upbound/provider-aws/v2/internal/controller/namespaced/bedrockagentcore/browser"
+	codeinterpreter "github.com/upbound/provider-aws/v2/internal/controller/namespaced/bedrockagentcore/codeinterpreter"
+	gateway "github.com/upbound/provider-aws/v2/internal/controller/namespaced/bedrockagentcore/gateway"
+	gatewaytarget "github.com/upbound/provider-aws/v2/internal/controller/namespaced/bedrockagentcore/gatewaytarget"
+	memory "github.com/upbound/provider-aws/v2/internal/controller/namespaced/bedrockagentcore/memory"
+	memorystrategy "github.com/upbound/provider-aws/v2/internal/controller/namespaced/bedrockagentcore/memorystrategy"
+	oauth2credentialprovider "github.com/upbound/provider-aws/v2/internal/controller/namespaced/bedrockagentcore/oauth2credentialprovider"
+	tokenvaultcmk "github.com/upbound/provider-aws/v2/internal/controller/namespaced/bedrockagentcore/tokenvaultcmk"
+	workloadidentity "github.com/upbound/provider-aws/v2/internal/controller/namespaced/bedrockagentcore/workloadidentity"
 	budget "github.com/upbound/provider-aws/v2/internal/controller/namespaced/budgets/budget"
 	budgetaction "github.com/upbound/provider-aws/v2/internal/controller/namespaced/budgets/budgetaction"
 	anomalymonitor "github.com/upbound/provider-aws/v2/internal/controller/namespaced/ce/anomalymonitor"
@@ -161,6 +173,7 @@ import (
 	publickey "github.com/upbound/provider-aws/v2/internal/controller/namespaced/cloudfront/publickey"
 	realtimelogconfig "github.com/upbound/provider-aws/v2/internal/controller/namespaced/cloudfront/realtimelogconfig"
 	responseheaderspolicy "github.com/upbound/provider-aws/v2/internal/controller/namespaced/cloudfront/responseheaderspolicy"
+	vpcorigin "github.com/upbound/provider-aws/v2/internal/controller/namespaced/cloudfront/vpcorigin"
 	domain "github.com/upbound/provider-aws/v2/internal/controller/namespaced/cloudsearch/domain"
 	domainserviceaccesspolicy "github.com/upbound/provider-aws/v2/internal/controller/namespaced/cloudsearch/domainserviceaccesspolicy"
 	eventdatastore "github.com/upbound/provider-aws/v2/internal/controller/namespaced/cloudtrail/eventdatastore"
@@ -189,6 +202,10 @@ import (
 	domainpermissionspolicy "github.com/upbound/provider-aws/v2/internal/controller/namespaced/codeartifact/domainpermissionspolicy"
 	repository "github.com/upbound/provider-aws/v2/internal/controller/namespaced/codeartifact/repository"
 	repositorypermissionspolicy "github.com/upbound/provider-aws/v2/internal/controller/namespaced/codeartifact/repositorypermissionspolicy"
+	project "github.com/upbound/provider-aws/v2/internal/controller/namespaced/codebuild/project"
+	reportgroup "github.com/upbound/provider-aws/v2/internal/controller/namespaced/codebuild/reportgroup"
+	sourcecredential "github.com/upbound/provider-aws/v2/internal/controller/namespaced/codebuild/sourcecredential"
+	webhookcodebuild "github.com/upbound/provider-aws/v2/internal/controller/namespaced/codebuild/webhook"
 	approvalruletemplate "github.com/upbound/provider-aws/v2/internal/controller/namespaced/codecommit/approvalruletemplate"
 	approvalruletemplateassociation "github.com/upbound/provider-aws/v2/internal/controller/namespaced/codecommit/approvalruletemplateassociation"
 	repositorycodecommit "github.com/upbound/provider-aws/v2/internal/controller/namespaced/codecommit/repository"
@@ -253,13 +270,13 @@ import (
 	devicepool "github.com/upbound/provider-aws/v2/internal/controller/namespaced/devicefarm/devicepool"
 	instanceprofile "github.com/upbound/provider-aws/v2/internal/controller/namespaced/devicefarm/instanceprofile"
 	networkprofile "github.com/upbound/provider-aws/v2/internal/controller/namespaced/devicefarm/networkprofile"
-	project "github.com/upbound/provider-aws/v2/internal/controller/namespaced/devicefarm/project"
+	projectdevicefarm "github.com/upbound/provider-aws/v2/internal/controller/namespaced/devicefarm/project"
 	testgridproject "github.com/upbound/provider-aws/v2/internal/controller/namespaced/devicefarm/testgridproject"
 	upload "github.com/upbound/provider-aws/v2/internal/controller/namespaced/devicefarm/upload"
 	bgppeer "github.com/upbound/provider-aws/v2/internal/controller/namespaced/directconnect/bgppeer"
 	connectiondirectconnect "github.com/upbound/provider-aws/v2/internal/controller/namespaced/directconnect/connection"
 	connectionassociation "github.com/upbound/provider-aws/v2/internal/controller/namespaced/directconnect/connectionassociation"
-	gateway "github.com/upbound/provider-aws/v2/internal/controller/namespaced/directconnect/gateway"
+	gatewaydirectconnect "github.com/upbound/provider-aws/v2/internal/controller/namespaced/directconnect/gateway"
 	gatewayassociation "github.com/upbound/provider-aws/v2/internal/controller/namespaced/directconnect/gatewayassociation"
 	gatewayassociationproposal "github.com/upbound/provider-aws/v2/internal/controller/namespaced/directconnect/gatewayassociationproposal"
 	hostedprivatevirtualinterface "github.com/upbound/provider-aws/v2/internal/controller/namespaced/directconnect/hostedprivatevirtualinterface"
@@ -408,6 +425,7 @@ import (
 	registryscanningconfiguration "github.com/upbound/provider-aws/v2/internal/controller/namespaced/ecr/registryscanningconfiguration"
 	replicationconfiguration "github.com/upbound/provider-aws/v2/internal/controller/namespaced/ecr/replicationconfiguration"
 	repositoryecr "github.com/upbound/provider-aws/v2/internal/controller/namespaced/ecr/repository"
+	repositorycreationtemplate "github.com/upbound/provider-aws/v2/internal/controller/namespaced/ecr/repositorycreationtemplate"
 	repositorypolicy "github.com/upbound/provider-aws/v2/internal/controller/namespaced/ecr/repositorypolicy"
 	repositoryecrpublic "github.com/upbound/provider-aws/v2/internal/controller/namespaced/ecrpublic/repository"
 	repositorypolicyecrpublic "github.com/upbound/provider-aws/v2/internal/controller/namespaced/ecrpublic/repositorypolicy"
@@ -465,6 +483,7 @@ import (
 	lbtargetgroupattachment "github.com/upbound/provider-aws/v2/internal/controller/namespaced/elbv2/lbtargetgroupattachment"
 	lbtruststore "github.com/upbound/provider-aws/v2/internal/controller/namespaced/elbv2/lbtruststore"
 	securityconfiguration "github.com/upbound/provider-aws/v2/internal/controller/namespaced/emr/securityconfiguration"
+	virtualcluster "github.com/upbound/provider-aws/v2/internal/controller/namespaced/emrcontainers/virtualcluster"
 	applicationemrserverless "github.com/upbound/provider-aws/v2/internal/controller/namespaced/emrserverless/application"
 	feature "github.com/upbound/provider-aws/v2/internal/controller/namespaced/evidently/feature"
 	projectevidently "github.com/upbound/provider-aws/v2/internal/controller/namespaced/evidently/project"
@@ -769,6 +788,9 @@ import (
 	vpcassociationauthorization "github.com/upbound/provider-aws/v2/internal/controller/namespaced/route53/vpcassociationauthorization"
 	zone "github.com/upbound/provider-aws/v2/internal/controller/namespaced/route53/zone"
 	zoneassociation "github.com/upbound/provider-aws/v2/internal/controller/namespaced/route53/zoneassociation"
+	associationroute53profiles "github.com/upbound/provider-aws/v2/internal/controller/namespaced/route53profiles/association"
+	profileroute53profiles "github.com/upbound/provider-aws/v2/internal/controller/namespaced/route53profiles/profile"
+	resourceassociationroute53profiles "github.com/upbound/provider-aws/v2/internal/controller/namespaced/route53profiles/resourceassociation"
 	clusterroute53recoverycontrolconfig "github.com/upbound/provider-aws/v2/internal/controller/namespaced/route53recoverycontrolconfig/cluster"
 	controlpanel "github.com/upbound/provider-aws/v2/internal/controller/namespaced/route53recoverycontrolconfig/controlpanel"
 	routingcontrol "github.com/upbound/provider-aws/v2/internal/controller/namespaced/route53recoverycontrolconfig/routingcontrol"
@@ -779,6 +801,8 @@ import (
 	resourceset "github.com/upbound/provider-aws/v2/internal/controller/namespaced/route53recoveryreadiness/resourceset"
 	dnssecconfig "github.com/upbound/provider-aws/v2/internal/controller/namespaced/route53resolver/dnssecconfig"
 	endpointroute53resolver "github.com/upbound/provider-aws/v2/internal/controller/namespaced/route53resolver/endpoint"
+	querylogconfig "github.com/upbound/provider-aws/v2/internal/controller/namespaced/route53resolver/querylogconfig"
+	querylogconfigassociation "github.com/upbound/provider-aws/v2/internal/controller/namespaced/route53resolver/querylogconfigassociation"
 	ruleroute53resolver "github.com/upbound/provider-aws/v2/internal/controller/namespaced/route53resolver/rule"
 	ruleassociation "github.com/upbound/provider-aws/v2/internal/controller/namespaced/route53resolver/ruleassociation"
 	appmonitor "github.com/upbound/provider-aws/v2/internal/controller/namespaced/rum/appmonitor"
@@ -990,6 +1014,7 @@ import (
 	webaclwafv2 "github.com/upbound/provider-aws/v2/internal/controller/namespaced/wafv2/webacl"
 	webaclassociation "github.com/upbound/provider-aws/v2/internal/controller/namespaced/wafv2/webaclassociation"
 	webaclloggingconfiguration "github.com/upbound/provider-aws/v2/internal/controller/namespaced/wafv2/webaclloggingconfiguration"
+	webaclrulegroupassociation "github.com/upbound/provider-aws/v2/internal/controller/namespaced/wafv2/webaclrulegroupassociation"
 	directoryworkspaces "github.com/upbound/provider-aws/v2/internal/controller/namespaced/workspaces/directory"
 	ipgroup "github.com/upbound/provider-aws/v2/internal/controller/namespaced/workspaces/ipgroup"
 	encryptionconfig "github.com/upbound/provider-aws/v2/internal/controller/namespaced/xray/encryptionconfig"
@@ -1124,6 +1149,18 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		schedulingpolicy.Setup,
 		inferenceprofile.Setup,
 		agent.Setup,
+		agentruntime.Setup,
+		agentruntimeendpoint.Setup,
+		apikeycredentialprovider.Setup,
+		browser.Setup,
+		codeinterpreter.Setup,
+		gateway.Setup,
+		gatewaytarget.Setup,
+		memory.Setup,
+		memorystrategy.Setup,
+		oauth2credentialprovider.Setup,
+		tokenvaultcmk.Setup,
+		workloadidentity.Setup,
 		budget.Setup,
 		budgetaction.Setup,
 		anomalymonitor.Setup,
@@ -1153,6 +1190,7 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		publickey.Setup,
 		realtimelogconfig.Setup,
 		responseheaderspolicy.Setup,
+		vpcorigin.Setup,
 		domain.Setup,
 		domainserviceaccesspolicy.Setup,
 		eventdatastore.Setup,
@@ -1181,6 +1219,10 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		domainpermissionspolicy.Setup,
 		repository.Setup,
 		repositorypermissionspolicy.Setup,
+		project.Setup,
+		reportgroup.Setup,
+		sourcecredential.Setup,
+		webhookcodebuild.Setup,
 		approvalruletemplate.Setup,
 		approvalruletemplateassociation.Setup,
 		repositorycodecommit.Setup,
@@ -1245,13 +1287,13 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		devicepool.Setup,
 		instanceprofile.Setup,
 		networkprofile.Setup,
-		project.Setup,
+		projectdevicefarm.Setup,
 		testgridproject.Setup,
 		upload.Setup,
 		bgppeer.Setup,
 		connectiondirectconnect.Setup,
 		connectionassociation.Setup,
-		gateway.Setup,
+		gatewaydirectconnect.Setup,
 		gatewayassociation.Setup,
 		gatewayassociationproposal.Setup,
 		hostedprivatevirtualinterface.Setup,
@@ -1400,6 +1442,7 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		registryscanningconfiguration.Setup,
 		replicationconfiguration.Setup,
 		repositoryecr.Setup,
+		repositorycreationtemplate.Setup,
 		repositorypolicy.Setup,
 		repositoryecrpublic.Setup,
 		repositorypolicyecrpublic.Setup,
@@ -1457,6 +1500,7 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		lbtargetgroupattachment.Setup,
 		lbtruststore.Setup,
 		securityconfiguration.Setup,
+		virtualcluster.Setup,
 		applicationemrserverless.Setup,
 		feature.Setup,
 		projectevidently.Setup,
@@ -1761,6 +1805,9 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		vpcassociationauthorization.Setup,
 		zone.Setup,
 		zoneassociation.Setup,
+		associationroute53profiles.Setup,
+		profileroute53profiles.Setup,
+		resourceassociationroute53profiles.Setup,
 		clusterroute53recoverycontrolconfig.Setup,
 		controlpanel.Setup,
 		routingcontrol.Setup,
@@ -1771,6 +1818,8 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		resourceset.Setup,
 		dnssecconfig.Setup,
 		endpointroute53resolver.Setup,
+		querylogconfig.Setup,
+		querylogconfigassociation.Setup,
 		ruleroute53resolver.Setup,
 		ruleassociation.Setup,
 		appmonitor.Setup,
@@ -1982,6 +2031,7 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		webaclwafv2.Setup,
 		webaclassociation.Setup,
 		webaclloggingconfiguration.Setup,
+		webaclrulegroupassociation.Setup,
 		directoryworkspaces.Setup,
 		ipgroup.Setup,
 		encryptionconfig.Setup,
@@ -2122,6 +2172,18 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		schedulingpolicy.SetupGated,
 		inferenceprofile.SetupGated,
 		agent.SetupGated,
+		agentruntime.SetupGated,
+		agentruntimeendpoint.SetupGated,
+		apikeycredentialprovider.SetupGated,
+		browser.SetupGated,
+		codeinterpreter.SetupGated,
+		gateway.SetupGated,
+		gatewaytarget.SetupGated,
+		memory.SetupGated,
+		memorystrategy.SetupGated,
+		oauth2credentialprovider.SetupGated,
+		tokenvaultcmk.SetupGated,
+		workloadidentity.SetupGated,
 		budget.SetupGated,
 		budgetaction.SetupGated,
 		anomalymonitor.SetupGated,
@@ -2151,6 +2213,7 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		publickey.SetupGated,
 		realtimelogconfig.SetupGated,
 		responseheaderspolicy.SetupGated,
+		vpcorigin.SetupGated,
 		domain.SetupGated,
 		domainserviceaccesspolicy.SetupGated,
 		eventdatastore.SetupGated,
@@ -2179,6 +2242,10 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		domainpermissionspolicy.SetupGated,
 		repository.SetupGated,
 		repositorypermissionspolicy.SetupGated,
+		project.SetupGated,
+		reportgroup.SetupGated,
+		sourcecredential.SetupGated,
+		webhookcodebuild.SetupGated,
 		approvalruletemplate.SetupGated,
 		approvalruletemplateassociation.SetupGated,
 		repositorycodecommit.SetupGated,
@@ -2243,13 +2310,13 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		devicepool.SetupGated,
 		instanceprofile.SetupGated,
 		networkprofile.SetupGated,
-		project.SetupGated,
+		projectdevicefarm.SetupGated,
 		testgridproject.SetupGated,
 		upload.SetupGated,
 		bgppeer.SetupGated,
 		connectiondirectconnect.SetupGated,
 		connectionassociation.SetupGated,
-		gateway.SetupGated,
+		gatewaydirectconnect.SetupGated,
 		gatewayassociation.SetupGated,
 		gatewayassociationproposal.SetupGated,
 		hostedprivatevirtualinterface.SetupGated,
@@ -2398,6 +2465,7 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		registryscanningconfiguration.SetupGated,
 		replicationconfiguration.SetupGated,
 		repositoryecr.SetupGated,
+		repositorycreationtemplate.SetupGated,
 		repositorypolicy.SetupGated,
 		repositoryecrpublic.SetupGated,
 		repositorypolicyecrpublic.SetupGated,
@@ -2455,6 +2523,7 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		lbtargetgroupattachment.SetupGated,
 		lbtruststore.SetupGated,
 		securityconfiguration.SetupGated,
+		virtualcluster.SetupGated,
 		applicationemrserverless.SetupGated,
 		feature.SetupGated,
 		projectevidently.SetupGated,
@@ -2759,6 +2828,9 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		vpcassociationauthorization.SetupGated,
 		zone.SetupGated,
 		zoneassociation.SetupGated,
+		associationroute53profiles.SetupGated,
+		profileroute53profiles.SetupGated,
+		resourceassociationroute53profiles.SetupGated,
 		clusterroute53recoverycontrolconfig.SetupGated,
 		controlpanel.SetupGated,
 		routingcontrol.SetupGated,
@@ -2769,6 +2841,8 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		resourceset.SetupGated,
 		dnssecconfig.SetupGated,
 		endpointroute53resolver.SetupGated,
+		querylogconfig.SetupGated,
+		querylogconfigassociation.SetupGated,
 		ruleroute53resolver.SetupGated,
 		ruleassociation.SetupGated,
 		appmonitor.SetupGated,
@@ -2980,6 +3054,7 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		webaclwafv2.SetupGated,
 		webaclassociation.SetupGated,
 		webaclloggingconfiguration.SetupGated,
+		webaclrulegroupassociation.SetupGated,
 		directoryworkspaces.SetupGated,
 		ipgroup.SetupGated,
 		encryptionconfig.SetupGated,
